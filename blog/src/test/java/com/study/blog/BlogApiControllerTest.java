@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -104,5 +105,32 @@ public class BlogApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].content").value(content))
                 .andExpect(jsonPath("$[0].title").value(title));
+    }
+
+    @DisplayName("findArticle: 블로그 글 조회에 성공합니다.")
+    @Test
+    public void findArticle() throws Exception {
+        // given
+        final String url = "/api/articles/{id}";
+        final String title = "title";
+        final String content = "content";
+
+        // when
+        Article savedArticle = blogRepository.save(
+            Article.builder()
+                    .title(title)
+                    .content(content)
+                    .build()
+        );
+
+        // then
+        final ResultActions resultActions =
+                mockMvc.perform(get(url, savedArticle.getId()).accept(MediaType.APPLICATION_JSON));
+
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").value(content))
+                .andExpect(jsonPath("$.title").value(title));
+
     }
 }
