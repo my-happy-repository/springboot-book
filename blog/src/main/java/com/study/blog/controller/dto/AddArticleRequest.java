@@ -2,10 +2,12 @@ package com.study.blog.controller.dto;
 
 import com.study.blog.domain.Article;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class AddArticleRequest {
 
     private String title;

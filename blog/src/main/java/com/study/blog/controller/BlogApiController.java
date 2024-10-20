@@ -1,18 +1,19 @@
 package com.study.blog.controller;
 
 import com.study.blog.controller.dto.AddArticleRequest;
+import com.study.blog.controller.dto.ArticleResponse;
 import com.study.blog.domain.Article;
 import com.study.blog.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController // HTTP Response Body 객체 데이터를 JSON 형식으로 반환 하는 컨트롤러
-public class BlogController {
+public class BlogApiController {
 
     private final BlogService blogService;
 
@@ -24,4 +25,20 @@ public class BlogController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
     }
 
+    // 블로그 글 전체 조회 API
+    @GetMapping("/api/articles")
+    public ResponseEntity<List<ArticleResponse>> findAllArticles() {
+        List<ArticleResponse> articles = blogService.findAll()
+                .stream()
+                .map(ArticleResponse::new)
+                .toList();
+
+        return ResponseEntity.ok().body(articles);
+    }
+
+    // 블로그 글 단건 조회 API
+    @GetMapping("/api/articles/{id}")
+    public Article findById(@PathVariable(name = "id") Long id) {
+        return blogService.findById(id);
+    }
 }
