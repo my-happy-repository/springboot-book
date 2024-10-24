@@ -24,6 +24,8 @@ dependencies {
     // 타임 리프에서 스프링 시큐리티를 사용하기 위한 의존성 추가
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("io.jsonwebtoken:jjwt-api:0.12.6")
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")
 
     runtimeOnly("com.h2database:h2")
 
