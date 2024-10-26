@@ -14,6 +14,9 @@ spring:
   h2:
     console:
       enabled: true
+jwt:
+  issuer: test
+  secret-key: test-jwt
 
 #jpa:
 #  # ?? ?? ??
