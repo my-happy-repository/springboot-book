@@ -80,6 +80,7 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(user, token, authorities);
     }
 
+    // 토큰 기반으로 사용자 ID 를 가져오는 메서드, 프로퍼티즈 파일에 저장 한 비밀 값으로 토큰을 복호화한 다음 클레임을 가져오는 private 메서드인 getClaims() 를 호출해서 클레임 정보를 반환
     public Long getUserId(String token) {
         Claims claims = getClaims(token);
         return claims.get("id", Long.class);
